@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import ru.kerporation.GRPCData;
+import ru.kerporation.grpccommon.GRPCData;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
