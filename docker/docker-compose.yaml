@@ -7,23 +7,26 @@ networks:
 volumes:
   db-grpc-data:
     driver: local
-  redis-data:
+  redis-grpc-data:
     driver: local
 
 services:
   generator:
+    platform: linux/amd64
     image: 'kkozlovsky/data-generator-grpc-microservice:latest'
     networks:
       - app
     depends_on:
-      - analyser
+      - postgres
+      - analyzer
     environment:
-      - GRPC_HOST=analyser:${GRPC_PORT}
+      - GRPC_HOST=analyzer:${GRPC_PORT}
       - BATCH_SIZE=${GENERATOR_BATCH_SIZE}
     ports:
       - '8081:8081'
 
-  analyser:
+  analyzer:
+    platform: linux/amd64
     image: 'kkozlovsky/data-analyzer-grpc-microservice:latest'
     networks:
       - app
@@ -31,7 +34,7 @@ services:
       - postgres
     environment:
       - GRPC_PORT=${GRPC_PORT}
-      - HOST=${§HOST}
+      - HOST=${HOST}
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USERNAME=${POSTGRES_USERNAME}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -40,18 +43,19 @@ services:
       - '8082:8082'
 
   store:
+    platform: linux/amd64
     image: 'kkozlovsky/data-store-grpc-microservice:latest'
     networks:
       - app
     depends_on:
       - postgres
     environment:
-      - GRPC_HOST=analyser:${GRPC_PORT}
+      - GRPC_HOST=analyzer:${GRPC_PORT}
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_PORT=${REDIS_PORT}
       - BATCH_SIZE=${STORE_BATCH_SIZE}
     ports:
-      - '8082:8082'
+      - '8083:8083'
 
   postgres:
     image: 'postgres:15.1-alpine'
@@ -72,4 +76,4 @@ services:
       - '6379:6379'
     command: redis-server --save 20 1 --loglevel warning
     volumes:
-      - redis-data:/data
+      - redis-grpc-data:/data
