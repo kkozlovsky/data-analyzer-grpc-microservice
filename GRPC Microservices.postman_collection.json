@@ -1,0 +1,169 @@
+{
+	"info": {
+		"_postman_id": "29eaaee0-fe6b-409a-a742-85f13ecd1421",
+		"name": "Kafka Microservices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4116788"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8081/api/v1/data/send",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"sensorId\" : 1,\n\t\"timestamp\": \"2024-02-19T20:36:09\",\n\t\"measurement\": 15.5,\n\t\"measurementType\": \"TEMPERATURE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/v1/data/send",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"data",
+						"send"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/api/v1/data/test/send",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"delayInSeconds\": 1,\n\t\"measurementTypes\": [\n\t\t\"TEMPERATURE\",\n\t\t\"POWER\",\n\t\t\"VOLTAGE\"\n\t]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/v1/data/test/send",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"data",
+						"test",
+						"send"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8083/api/v1/analytics/summary/1?mt=POWER&mt=VOLTAGE&st=AVG",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"delayInSeconds\": 1,\n\t\"measurementTypes\": [\n\t\t\"TEMPERATURE\",\n\t\t\"POWER\",\n\t\t\"VOLTAGE\"\n\t]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8083/api/v1/analytics/summary/1?mt=POWER&mt=VOLTAGE&st=AVG",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"api",
+						"v1",
+						"analytics",
+						"summary",
+						"1"
+					],
+					"query": [
+						{
+							"key": "mt",
+							"value": "POWER"
+						},
+						{
+							"key": "mt",
+							"value": "VOLTAGE"
+						},
+						{
+							"key": "st",
+							"value": "AVG"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8083/api/v1/analytics/summary/1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"delayInSeconds\": 1,\n\t\"measurementTypes\": [\n\t\t\"TEMPERATURE\",\n\t\t\"POWER\",\n\t\t\"VOLTAGE\"\n\t]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8083/api/v1/analytics/summary/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"api",
+						"v1",
+						"analytics",
+						"summary",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
